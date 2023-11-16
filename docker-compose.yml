@@ -1,0 +1,20 @@
+version: "3.5"
+
+services:
+  srv:
+    build:
+      context: ./server
+    restart: on-failure
+    depends_on:
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+
+  vue:
+    build:
+      context: ./client
+    ports:
+      - "3000:3000"
